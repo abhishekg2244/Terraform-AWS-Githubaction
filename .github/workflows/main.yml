@@ -1,12 +1,15 @@
 name: TerraformwithAWS
-run-name:  infra on AWS
-on: [workflow_dispatch]
+run-name: infra on AWS
+
+on: 
+  workflow_dispatch:
+
 jobs:
   firstjobtocheckconnection:
-     name: First Job to Check AWS Connection
-     runs-on: ubuntu-latest
+    name: First Job to Check AWS Connection
+    runs-on: ubuntu-latest
 
-     steps:
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
@@ -15,6 +18,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1  # change if you use a different region
-         
-                
+          aws-region: us-east-1  # change if needed
+
+      - name: Verify AWS Identity
+        run: aws sts get-caller-identity
